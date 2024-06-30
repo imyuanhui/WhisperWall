@@ -8,7 +8,7 @@ import {
   TextInput,
 } from "flowbite-react";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   signInStart,
   signInSuccess,
@@ -31,6 +31,7 @@ const Signin = () => {
     e.preventDefault();
     try {
       setLoading(true);
+      setErrMessage(null);
       dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
