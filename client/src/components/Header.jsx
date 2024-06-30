@@ -7,8 +7,13 @@ import { FaMoon } from "react-icons/fa";
 const Header = () => {
   return (
     <Navbar className="border-b-2">
-      <Link to="/" className="self-center whitespace-nowrap">
-        WhisperWall
+      <Link
+        to="/"
+        className="font-mono self-center whitespace-nowrap text-sm sm:text-xl font-semibold"
+      >
+        <span className="px-2 py-1 rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-white">
+          WhisperWall
+        </span>
       </Link>
       <form>
         <TextInput
