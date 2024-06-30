@@ -8,6 +8,7 @@ import {
   TextInput,
 } from "flowbite-react";
 import { useState } from "react";
+import OAuth from "../components/OAuth";
 
 const Signup = () => {
   const [formData, setFormData] = useState({});
@@ -120,6 +121,7 @@ const Signup = () => {
                 "Sign Up"
               )}
             </Button>
+            <OAuth />
           </form>
           <div className="flex text-sm mt-5 gap-2">
             <span>Have an account?</span>

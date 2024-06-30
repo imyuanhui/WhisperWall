@@ -58,7 +58,7 @@ const Header = () => {
           </Dropdown>
         ) : (
           <Link to="/sign-in">
-            <Button outline gradientDuoTone="redToYellow">
+            <Button outline gradientDuoTone="pinkToOrange">
               Sign In
             </Button>{" "}
           </Link>

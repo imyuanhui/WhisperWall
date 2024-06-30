@@ -1,20 +1,46 @@
-import React from "react";
+import React, { useRef } from "react";
 import { TextInput, Button } from "flowbite-react";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { set } from "mongoose";
 
 const DashProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { username, email } = currentUser;
+  const [imgFile, setImgFile] = useState(null);
+  const [imgURL, setImgURL] = useState(null);
+  const filePickerRef = useRef();
+  const handleImgChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImgFile(file);
+      setImgURL(URL.createObjectURL(file));
+    }
+  };
+  useEffect(() => {
+    if (imgFile) {
+      uploadImage();
+    }
+  }, [imgFile]);
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
       <form className="flex flex-col gap-5">
-        <div className="w-32 h-32 self-center">
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImgChange}
+          ref={filePickerRef}
+          hidden
+        />
+        <div
+          className="w-32 h-32 self-center cursor-pointer"
+          onClick={() => filePickerRef.current.click()}
+        >
           <img
-            src={currentUser.profilePicture}
+            src={imgFile ? imgURL : currentUser.profilePicture}
             alt="avatar"
-            className="rounded-full w-full h-full object-cover border-8 border-[lightGray] cursor-pointer"
+            className="rounded-full w-full h-full object-cover border-8 border-[lightGray]"
           />
         </div>
         <TextInput id="username" type="text" defaultValue={username} />
