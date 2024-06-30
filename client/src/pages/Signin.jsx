@@ -47,7 +47,6 @@ const Signin = () => {
       }
       if (res.ok) {
         setLoading(false);
-        console.log(data);
         dispatch(signInSuccess(data));
         navigate("/");
       }

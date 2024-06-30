@@ -19,7 +19,6 @@ const DashProfile = () => {
   const [imgUploadErr, setImgUploadErr] = useState(null);
   const [imgUploading, setImgUploading] = useState(false);
   const filePickerRef = useRef();
-  console.log(imgUploadProgress, imgUploadErr);
 
   const handleImgChange = (e) => {
     const file = e.target.files[0];
@@ -55,12 +54,25 @@ const DashProfile = () => {
       }
     );
   };
-
   useEffect(() => {
     if (imgFile) {
       uploadImage();
     }
   }, [imgFile]);
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/update/:${currentUser._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: username }),
+      });
+      const data = await res.json();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
@@ -99,13 +111,13 @@ const DashProfile = () => {
           value={email}
           required
         />
-        <TextInput
-          id="password"
-          type="password"
-          placeholder="********"
-          required
-        />
-        <Button type="submit" gradientDuoTone="redToYellow" outline>
+        <TextInput id="password" type="password" placeholder="********" />
+        <Button
+          type="submit"
+          gradientDuoTone="pinkToOrange"
+          outline
+          onClick={handleUpdate}
+        >
           Update
         </Button>
       </form>
