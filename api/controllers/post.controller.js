@@ -54,7 +54,6 @@ export const getPosts = async (req, res, next) => {
 export const deletePost = async (req, res, next) => {
   const postId = req.params.postId.slice(1, req.params.postId.length);
   const postToDel = await Post.findById(postId);
-  console.log(req.user.isAdmin, req.user.id, postToDel.userId);
 
   if (!req.user.isAdmin && req.user.id !== postToDel.userId) {
     return next(errorHandler(403, "You are not allowed to delete this post"));
@@ -63,6 +62,33 @@ export const deletePost = async (req, res, next) => {
   try {
     await Post.deleteOne({ _id: postId });
     res.status(200).json(`Post ${postId} has been deleted`);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const updatePost = async (req, res, next) => {
+  const postId = req.params.postId.slice(1, req.params.postId.length);
+  const postToUpdate = await Post.findById(postId);
+  console.log(postId, postToUpdate.content);
+  if (!req.user.isAdmin && postToUpdate.userId !== req.user.id) {
+    return next(errorHandler(403, "You are not allowed to update this post"));
+  }
+  try {
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId,
+      {
+        $set: {
+          content: req.body.content,
+          tags: req.body.tags,
+          image: req.body.image,
+          isDraft: req.body.isDraft,
+          isPrivate: req.body.isPrivate,
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedPost);
   } catch (err) {
     next(err);
   }
