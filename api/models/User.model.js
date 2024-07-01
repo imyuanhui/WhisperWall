@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema(
       default:
         "https://image.freepik.com/free-vector/woman-whispering-into-someone-ear-telling-her-something-secret_37029-5.jpg",
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
