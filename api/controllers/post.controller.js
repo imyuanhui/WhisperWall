@@ -28,7 +28,7 @@ export const create = async (req, res, next) => {
 export const getPosts = async (req, res, next) => {
   try {
     const startIndex = parseInt(req.query.startIndex) || 0;
-    const limit = parseInt(req.query.limit) || 7;
+    const limit = parseInt(req.query.limit) || 12;
     const sortDirection = req.query.order === "asc" ? 1 : -1;
     const reqTags = req.query.tags
       ? req.query.tags.toLowerCase().split(",")
@@ -41,6 +41,19 @@ export const getPosts = async (req, res, next) => {
       .sort({ updatedAt: sortDirection })
       .skip(startIndex)
       .limit(limit);
+    const total = await Post.countDocuments();
+    res.status(200).json({
+      posts,
+      total,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getRandomPosts = async (req, res, next) => {
+  try {
+    const posts = await Post.aggregate([{ $sample: { size: 12 } }]);
     const total = await Post.countDocuments();
     res.status(200).json({
       posts,
@@ -70,7 +83,6 @@ export const deletePost = async (req, res, next) => {
 export const updatePost = async (req, res, next) => {
   const postId = req.params.postId.slice(1, req.params.postId.length);
   const postToUpdate = await Post.findById(postId);
-  console.log(postId, postToUpdate.content);
   if (!req.user.isAdmin && postToUpdate.userId !== req.user.id) {
     return next(errorHandler(403, "You are not allowed to update this post"));
   }

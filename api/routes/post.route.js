@@ -4,6 +4,7 @@ import {
   create,
   deletePost,
   getPosts,
+  getRandomPosts,
   updatePost,
 } from "../controllers/post.controller.js";
 
@@ -13,5 +14,6 @@ router.post("/create", verifyToken, create);
 router.get("/getposts", getPosts);
 router.delete("/deletepost/:postId", verifyToken, deletePost);
 router.put("/updatepost/:postId", verifyToken, updatePost);
+router.get("/get-random-posts", getRandomPosts);
 
 export default router;
