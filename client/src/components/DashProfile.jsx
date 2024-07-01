@@ -1,6 +1,6 @@
 import { TextInput, Button, Alert } from "flowbite-react";
 import { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getStorage,
   ref,
@@ -10,8 +10,14 @@ import {
 import { app } from "../firebase";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import {
+  updateFailure,
+  updateStart,
+  updateSuccess,
+} from "../redux/user/userSlice";
+
 const DashProfile = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, error, loading } = useSelector((state) => state.user);
   const { username, email } = currentUser;
   const [imgFile, setImgFile] = useState(null);
   const [imgURL, setImgURL] = useState(null);
@@ -19,6 +25,10 @@ const DashProfile = () => {
   const [imgUploadErr, setImgUploadErr] = useState(null);
   const [imgUploading, setImgUploading] = useState(false);
   const filePickerRef = useRef();
+  const [formData, setFormData] = useState({});
+  const [updateErr, setUpdateErr] = useState(null);
+  const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
+  const dispatch = useDispatch();
 
   const handleImgChange = (e) => {
     const file = e.target.files[0];
@@ -30,6 +40,7 @@ const DashProfile = () => {
 
   const uploadImage = async () => {
     setImgUploadErr(null);
+    setImgUploading(true);
     const storage = getStorage(app);
     const fileName = new Date().getTime() + imgFile.name;
     const storageRef = ref(storage, fileName);
@@ -46,37 +57,66 @@ const DashProfile = () => {
         setImgUploadProgress(null);
         setImgFile(null);
         setImgURL(null);
+        setImgUploading(false);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImgURL(downloadURL);
+          setFormData({ ...formData, profilePicture: downloadURL });
+          setImgUploading(false);
         });
       }
     );
   };
+
   useEffect(() => {
     if (imgFile) {
       uploadImage();
     }
   }, [imgFile]);
 
+  const handleChange = (e) => {
+    setFormData(Object.assign(formData, { [e.target.id]: e.target.value }));
+    console.log(formData);
+  };
+
   const handleUpdate = async (e) => {
     e.preventDefault();
+    setUpdateErr(null);
+    setUpdateUserSuccess(null);
+    if (Object.keys(formData).length === 0) {
+      setUpdateErr("No changes made");
+      return;
+    }
+    if (imgUploading) {
+      setUpdateErr("Please wait for image to upload");
+      return;
+    }
+
     try {
-      const res = await fetch(`/update/:${currentUser._id}`, {
+      dispatch(updateStart());
+      const res = await fetch(`/api/user/update/:${currentUser._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: username }),
+        body: JSON.stringify(formData),
       });
       const data = await res.json();
+      if (!res.ok) {
+        dispatch(updateFailure(data.message));
+        setUpdateErr(data.message);
+      } else {
+        dispatch(updateSuccess(data));
+        setUpdateUserSuccess("User's profile updated successfully");
+      }
     } catch (err) {
-      console.log(err);
+      dispatch(updateFailure(err.message));
+      setUpdateErr(err.message);
     }
   };
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
-      <form className="flex flex-col gap-5">
+      <form className="flex flex-col gap-5" onSubmit={handleUpdate}>
         <input
           type="file"
           accept="image/*"
@@ -103,28 +143,55 @@ const DashProfile = () => {
         </div>
 
         {imgUploadErr && <Alert color="failure">{imgUploadErr}</Alert>}
-        <TextInput id="username" type="text" defaultValue={username} />
+        <TextInput
+          id="username"
+          type="text"
+          defaultValue={username}
+          onChange={handleChange}
+          required
+        />
         <TextInput
           id="email"
           type="email"
           placeholder="name@flowbite.com"
-          value={email}
+          defaultValue={email}
+          onChange={handleChange}
           required
         />
-        <TextInput id="password" type="password" placeholder="********" />
+        <TextInput
+          id="password"
+          type="password"
+          placeholder="********"
+          onChange={handleChange}
+        />
         <Button
           type="submit"
           gradientDuoTone="pinkToOrange"
           outline
-          onClick={handleUpdate}
+          disabled={loading || imgUploading}
         >
-          Update
+          {loading ? "Loading" : "Update"}
         </Button>
       </form>
       <div className="text-red-500 flex justify-between mt-5 text-sm">
         <span className="cursor-pointer">Delete Account</span>
         <span className="cursor-pointer">Sign Out</span>
       </div>
+      {updateUserSuccess && (
+        <Alert color="success" className="mt-5">
+          {updateUserSuccess}
+        </Alert>
+      )}
+      {updateErr && (
+        <Alert color="failure" className="mt-5">
+          {updateErr}
+        </Alert>
+      )}
+      {error && (
+        <Alert color="failure" className="mt-5">
+          {error}
+        </Alert>
+      )}
     </div>
   );
 };

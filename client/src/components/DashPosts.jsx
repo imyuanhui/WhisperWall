@@ -15,7 +15,7 @@ const DashPosts = () => {
     };
     getPosts();
   }, []);
-  return posts ? (
+  return !posts || posts.length === 0 ? (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <p className="text-center mb-4">You don't have any whispers yet.</p>
       <a href="/create-post" className="text-blue-500 hover:underline">
