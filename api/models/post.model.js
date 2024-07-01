@@ -17,7 +17,16 @@ const postSchema = new mongoose.Schema(
     },
     tags: {
       type: [String],
-      default: ["All"],
+      default: ["all"],
+    },
+    isPrivate: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+    isDraft: {
+      type: Boolean,
+      default: false,
     },
     slug: {
       type: String,
