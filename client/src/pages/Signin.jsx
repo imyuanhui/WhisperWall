@@ -25,7 +25,6 @@ const Signin = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
-    console.log(loading, errMessage);
   };
 
   const handleSubmit = async (e) => {

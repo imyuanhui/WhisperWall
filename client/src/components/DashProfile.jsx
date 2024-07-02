@@ -1,4 +1,4 @@
-import { TextInput, Button, Alert } from "flowbite-react";
+import { TextInput, Button, Alert, Modal } from "flowbite-react";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,7 +14,9 @@ import {
   updateFailure,
   updateStart,
   updateSuccess,
+  signoutSuccess,
 } from "../redux/user/userSlice";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 const DashProfile = () => {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -29,6 +31,7 @@ const DashProfile = () => {
   const [updateErr, setUpdateErr] = useState(null);
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const dispatch = useDispatch();
+  const [openModal, setOpenModal] = useState(false);
 
   const handleImgChange = (e) => {
     const file = e.target.files[0];
@@ -113,6 +116,20 @@ const DashProfile = () => {
       setUpdateErr(err.message);
     }
   };
+
+  const handleSignout = async () => {
+    try {
+      const res = await fetch("/api/user/signout", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signoutSuccess());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
@@ -175,7 +192,9 @@ const DashProfile = () => {
       </form>
       <div className="text-red-500 flex justify-between mt-5 text-sm">
         <span className="cursor-pointer">Delete Account</span>
-        <span className="cursor-pointer">Sign Out</span>
+        <span className="cursor-pointer" onClick={() => setOpenModal(true)}>
+          Sign Out
+        </span>
       </div>
       {updateUserSuccess && (
         <Alert color="success" className="mt-5">
@@ -192,6 +211,36 @@ const DashProfile = () => {
           {error}
         </Alert>
       )}
+      <Modal
+        show={openModal}
+        size="md"
+        popup
+        onClose={() => setOpenModal(false)}
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              Are you sure you want to sign out?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button
+                color="warning"
+                onClick={() => {
+                  setOpenModal(false);
+                  handleSignout();
+                }}
+              >
+                {"Yes, I'm sure"}
+              </Button>
+              <Button color="gray" onClick={() => setOpenModal(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
