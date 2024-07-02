@@ -46,25 +46,25 @@ const Signup = () => {
     }
   };
   return (
-    <div className="min-h-screen mt-20">
-      <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5 md:gap-20">
         {/* left */}
-        <div className="flex-1">
+        <div className="flex-1 max-w-md">
           <Link to="/" className="font-mono text-4xl font-bold">
             <span className="px-2 py-1 rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-white">
               WhisperWall
             </span>
           </Link>
-          <p className="text-sm mt-5">
-            This a demo project. You can sign up with your own email or go to
-            sign in directly with a demo account and you can find the username
-            and password on that page.
+          <p className="text-sm mt-5 font-mono">
+            This is a demo project. You can either sign up with your own email
+            or sign in directly using a demo account. The username and password
+            for the demo account are provided on the sign-in page.
           </p>
         </div>
         {/* right */}
         <div className="flex-1">
           <form
-            className="flex max-w-md flex-col gap-4"
+            className="flex max-w-md min-w-72 flex-col gap-4"
             onSubmit={handleSubmit}
           >
             <div>

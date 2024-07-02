@@ -95,6 +95,10 @@ const DashProfile = () => {
       setUpdateErr("Please wait for image to upload");
       return;
     }
+    if (currentUser.username === "whisper_demo") {
+      setUpdateErr("You are not allowed to update demo account");
+      return;
+    }
 
     try {
       dispatch(updateStart());

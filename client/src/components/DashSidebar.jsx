@@ -43,7 +43,7 @@ const DashSidebar = () => {
   }, [location.search]);
   return (
     <>
-      <Sidebar className="w-full md:w-56">
+      <Sidebar className="w-full md:w-56 h-full">
         <Sidebar.Items>
           <Sidebar.ItemGroup>
             <Sidebar.Item href="/" icon={HiChartPie}>

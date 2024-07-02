@@ -6,6 +6,7 @@ import {
   Label,
   Spinner,
   TextInput,
+  Clipboard,
 } from "flowbite-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -56,28 +57,44 @@ const Signin = () => {
     }
   };
   return (
-    <div className="min-h-screen mt-20">
-      <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="flex p-3 mx-auto flex-col md:flex-row md:items-center gap-5">
         {/* left */}
-        <div className="flex-1">
+        <div className="flex-1 max-w-md">
           <Link to="/" className="font-mono text-4xl font-bold">
             <span className="px-2 py-1 rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-white">
               WhisperWall
             </span>
           </Link>
-          <p className="text-sm mt-5">
-            This a demo project. You can sign up with your own email or sign in
-            directly with the demo account:
+          <p className="text-sm mt-5 mb-2 font-mono">
+            This is a demo project. You can either sign up with your own email
+            or sign in directly using the demo account:
           </p>
-          <p className="text-sm flex gap-2">
-            <span className="font-bold">Username: </span>demo
-            <span className="font-bold">Password: </span>demo991126
-          </p>
+          <div className="flex flex-col gap-1">
+            <div className="relative flex items-center gap-1">
+              <Label value="Username:" className="w-20 font-mono" />
+              <div>
+                <span className="font-mono text-sm bg-yellow-50 rounded-md p-1">
+                  whisper_demo
+                </span>
+                <Clipboard.WithIcon valueToCopy="whisper_demo" />
+              </div>
+            </div>
+            <div className="relative flex items-center gap-1">
+              <Label value="Password:" className="w-20 font-mono" />
+              <div>
+                <span className="font-mono text-sm bg-yellow-50 rounded-md p-1">
+                  whisper_demo@gmail.com
+                </span>
+                <Clipboard.WithIcon valueToCopy="whisper_demo@gmail.com" />
+              </div>
+            </div>
+          </div>
         </div>
         {/* right */}
         <div className="flex-1">
           <form
-            className="flex max-w-md flex-col gap-4"
+            className="flex max-w-md min-w-72 flex-col gap-4"
             onSubmit={handleSubmit}
           >
             <div>

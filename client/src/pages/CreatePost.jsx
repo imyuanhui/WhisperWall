@@ -100,11 +100,8 @@ const CreatePost = () => {
     console.log(formData);
   };
   return (
-    <div className="w-screen">
-      <form
-        className="flex flex-col p-10 w-full h-full"
-        onSubmit={handleSubmit}
-      >
+    <div className="w-screen h-screen flex items-center justify-center">
+      <form className="flex flex-col p-10 w-full" onSubmit={handleSubmit}>
         <input
           type="file"
           ref={filePickerRef}
