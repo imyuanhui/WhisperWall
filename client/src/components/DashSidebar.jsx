@@ -65,11 +65,7 @@ const DashSidebar = () => {
             >
               Whispers
             </Sidebar.Item>
-            <Sidebar.Item
-              href="?tab=create"
-              active={tab === "create"}
-              icon={HiViewGridAdd}
-            >
+            <Sidebar.Item href="/create-whisper" icon={HiViewGridAdd}>
               Create
             </Sidebar.Item>
           </Sidebar.ItemGroup>
