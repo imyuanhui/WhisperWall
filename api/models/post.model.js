@@ -15,18 +15,18 @@ const postSchema = new mongoose.Schema(
       default:
         "https://cdn5.vectorstock.com/i/1000x1000/05/54/seamless-texture-a-cartoon-brick-wall-vector-25670554.jpg",
     },
-    tags: {
-      type: [String],
-      default: ["all"],
+    pseudonym: {
+      type: String,
+      default: "whisperer",
+    },
+    tag: {
+      type: String,
+      default: "all",
     },
     isPrivate: {
       type: Boolean,
       default: false,
       required: true,
-    },
-    isDraft: {
-      type: Boolean,
-      default: false,
     },
     slug: {
       type: String,

@@ -30,12 +30,9 @@ export const getPosts = async (req, res, next) => {
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 12;
     const sortDirection = req.query.order === "asc" ? 1 : -1;
-    const reqTags = req.query.tags
-      ? req.query.tags.toLowerCase().split(",")
-      : [];
     const posts = await Post.find({
       ...(req.query.userId && { userId: req.query.userId }),
-      ...(req.query.tags && { tags: { $in: reqTags } }),
+      ...(req.query.tag && { tag: req.query.tag }),
       ...(req.query.postId && { _id: req.query.postId }),
     })
       .sort({ updatedAt: sortDirection })
@@ -92,7 +89,7 @@ export const updatePost = async (req, res, next) => {
       {
         $set: {
           content: req.body.content,
-          tags: req.body.tags,
+          tag: req.body.tag,
           image: req.body.image,
           isDraft: req.body.isDraft,
           isPrivate: req.body.isPrivate,
