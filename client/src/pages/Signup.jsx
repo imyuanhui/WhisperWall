@@ -31,7 +31,6 @@ const Signup = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data.message);
       if (data.success === false) {
         return setErrMessage(data.message);
       }
@@ -41,7 +40,6 @@ const Signup = () => {
       }
     } catch (err) {
       setErrMessage(err.message);
-      console.log(errMessage);
       setLoading(false);
     }
   };
