@@ -4,27 +4,35 @@ import {
   TextInput,
   ToggleSwitch,
   Button,
-  Card,
+  Alert,
+  Spinner,
 } from "flowbite-react";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { app } from "../firebase";
 import { useRef, useState, useEffect } from "react";
 import { HiOutlineUpload } from "react-icons/hi";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
-  const [pseudonym, setPseudonym] = useState(
-    "Whisperer" + Math.floor(1000 + Math.random * 9000)
-  );
-  const [tag, setTag] = useState(null);
-  const [isPrivate, setIsPrivate] = useState(false);
-  const [content, setContent] = useState(null);
   const [formData, setFormData] = useState({});
+  const [isPrivate, setIsPrivate] = useState(false);
   const [imgFile, setImgFile] = useState(null);
   const [imgURL, setImgURL] = useState(null);
   const [imgUploadProgress, setImgUploadProgress] = useState(null);
   const [imgUploadErr, setImgUploadErr] = useState(null);
   const [imgUploading, setImgUploading] = useState(false);
   const filePickerRef = useRef();
+  const [errMessage, setErrMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const [isDraft, setIsDraft] = useState(true);
 
   const modules = {
     toolbar: [
@@ -74,7 +82,7 @@ const CreatePost = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImgURL(downloadURL);
-          setFormData({ ...formData, profilePicture: downloadURL });
+          setFormData({ ...formData, image: downloadURL });
           setImgUploading(false);
         });
       }
@@ -89,15 +97,37 @@ const CreatePost = () => {
   }, [imgFile]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(pseudonym, tag, content, isPrivate);
-    setFormData({
-      pseudonym: pseudonym,
-      tag: tag,
-      content: content,
-      isPrivate: isPrivate,
-    });
+    if (isDraft) {
+      e.preventDefault();
+    }
+
+    if (imgUploading) {
+      setErrMessage("Please wait from image to upload");
+      return;
+    }
+
     console.log(formData);
+    try {
+      setLoading(true);
+      setErrMessage(null);
+      const res = await fetch("/api/post/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data.message);
+      if (data.success === false) {
+        setErrMessage(data.message);
+      }
+      setLoading(false);
+      if (res.ok) {
+        navigate("/dashboard?tab=my-whisper");
+      }
+    } catch (err) {
+      setErrMessage(err.message);
+      setLoading(false);
+    }
   };
   return (
     <div className="w-screen h-screen flex items-center justify-center">
@@ -118,7 +148,9 @@ const CreatePost = () => {
               defaultValue={"Whisperer"}
               className="flex-1"
               required
-              onChange={(e) => setPseudonym(e.target.value)}
+              onChange={(e) =>
+                setFormData({ ...formData, pseudonym: e.target.value })
+              }
             />
           </div>
 
@@ -128,7 +160,9 @@ const CreatePost = () => {
               id="tag"
               className="flex-1"
               required
-              onChange={(e) => setTag(e.target.value)}
+              onChange={(e) =>
+                setFormData({ ...formData, tag: e.target.value })
+              }
             >
               <option value="">--Choose a tag--</option>
               <option value="emotion">Emotion</option>
@@ -167,11 +201,11 @@ const CreatePost = () => {
               formats={formats}
               className="min-h-48 md:min-h-72 lg:min-h-96 max-h-100 mb-3"
               placeholder="Write something down..."
-              onChange={(e) => setContent(e)}
+              onChange={(val) => setFormData({ ...formData, content: val })}
               required
             />
             <div className="flex gap-3 items-center mt-2">
-              <Label htmlFor="private" value="Set as private?" />
+              <Label htmlFor="private" value="Set it private?" />
               <ToggleSwitch
                 id="private"
                 checked={isPrivate}
@@ -181,19 +215,45 @@ const CreatePost = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-2 md:flex-row md:gap-10 justify-center mt-10">
-          <Button gradientDuoTone="pinkToOrange" outline className="min-w-40">
-            Save a draft
-          </Button>
+        <div className="flex justify-center mt-10">
+          {/* <Button
+            gradientDuoTone="pinkToOrange"
+            outline
+            className="min-w-40"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <Spinner size="sm" />
+                <span className="pl-3">Loading...</span>
+              </>
+            ) : (
+              "Save as draft"
+            )}
+          </Button> */}
           <Button
             gradientDuoTone="pinkToOrange"
             className="min-w-40"
             type="submit"
+            disabled={loading}
           >
-            Publish
+            {loading ? (
+              <>
+                <Spinner size="sm" />
+                <span className="pl-3">Loading...</span>
+              </>
+            ) : (
+              "Send"
+            )}
           </Button>
         </div>
       </form>
+      {errMessage && (
+        <Alert className="mt-5" color="failure">
+          {errMessage}
+        </Alert>
+      )}
     </div>
   );
 };
