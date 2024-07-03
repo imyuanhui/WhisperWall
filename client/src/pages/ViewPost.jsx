@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { formatTime } from "../utils/formatTime.js";
 import DOMPurify from "dompurify";
-import { Badge } from "flowbite-react";
+import { Badge, Button, TextInput, Textarea } from "flowbite-react";
 import { HiClock } from "react-icons/hi";
+import { AiOutlineSend } from "react-icons/ai";
 
 const ViewPost = () => {
   const { postId } = useParams();
@@ -40,8 +41,8 @@ const ViewPost = () => {
     getPost();
   }, [postId]);
   return (
-    <div className="flex w-screen h-screen justify-center pt-10">
-      <div className="flex flex-col gap-2 lg:w-4/5 max-w-full">
+    <div className="flex w-screen justify-center pt-10 pb-10">
+      <div className="flex flex-col gap-2 lg:w-2/5 max-w-full">
         {/* Post */}
         <div className="max-w-full max-h-72">
           <img
@@ -64,8 +65,14 @@ const ViewPost = () => {
           className="pl-5 pr-5 lg:p-0 prose mt-5"
           dangerouslySetInnerHTML={{ __html: content }}
         />
+        <div className="flex max-w-full gap-3 items-center">
+          {/* Comment */}
+          <Textarea className="flex-1" />
+          <Button gradientDuoTone="pinkToOrange" pill>
+            <AiOutlineSend className="h-6 w-6" />
+          </Button>
+        </div>
       </div>
-      <div>{/* Comment */}</div>
     </div>
   );
 };

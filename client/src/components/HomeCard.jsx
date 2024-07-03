@@ -7,7 +7,7 @@ const HomeCard = ({ post }) => {
       style={{
         backgroundImage: `url(${post.image})`,
       }}
-      href={`/view-post?id=${post._id}`}
+      href={`/view-whisper/${post._id}`}
     >
       <span className="font-mono p-4 text-3xl md:text-2xl lg:text-xl">
         {post.content}

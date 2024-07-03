@@ -3,9 +3,8 @@ import { Card } from "flowbite-react";
 
 const DashCard = ({ post }) => {
   const stripHtmlTags = (html) => {
-    const div = document.createElement("div");
-    div.innerHTML = html;
-    return div.textContent || div.innerText || "";
+    const strippedString = html.replace(/<\/?[^>]+(>|$)/g, " ").trim();
+    return strippedString;
   };
   const truncateText = (text, maxLength) => {
     if (text.length <= maxLength) {
@@ -15,7 +14,7 @@ const DashCard = ({ post }) => {
   };
 
   const plainText = stripHtmlTags(post.content);
-  const truncatedText = truncateText(plainText, 100);
+  const truncatedText = truncateText(plainText, 150);
 
   return (
     <Card
@@ -25,7 +24,7 @@ const DashCard = ({ post }) => {
       }}
       href={`/view-whisper/${post._id}`}
     >
-      <span className="font-mono p-4 text-sm bg-white bg-opacity-50 w-full h-full">
+      <span className="font-mono p-4 text-xl md:text-lg lg:text-sm bg-white bg-opacity-50 w-full h-full overflow-hidden">
         {truncatedText}
       </span>
     </Card>
