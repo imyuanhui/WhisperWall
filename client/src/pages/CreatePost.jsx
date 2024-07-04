@@ -96,6 +96,7 @@ const CreatePost = () => {
   }, [imgFile]);
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     if (imgUploading) {
       setErrMessage("Please wait from image to upload");
       return;
@@ -111,14 +112,12 @@ const CreatePost = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data.message);
-      if (data.success === false) {
+      if (!res.ok) {
         setErrMessage(data.message);
+      } else {
+        navigate(-1);
       }
       setLoading(false);
-      if (res.ok) {
-        navigate("/dashboard?tab=my-whisper");
-      }
     } catch (err) {
       setErrMessage(err.message);
       setLoading(false);
