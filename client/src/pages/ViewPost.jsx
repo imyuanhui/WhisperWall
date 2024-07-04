@@ -101,7 +101,7 @@ const ViewPost = () => {
       if (!res.ok) {
         setErrMessage(data.message);
       } else {
-        setSuccessMessage("Post deleted successfully");
+        setSuccessMessage("Whisper deleted successfully");
         navigate(-1);
       }
     } catch (err) {
@@ -151,7 +151,7 @@ const ViewPost = () => {
       if (!res.ok) {
         setErrMessage(data.message);
       } else {
-        setSuccessMessage("Post deleted successfully");
+        setSuccessMessage("Message deleted successfully");
         getComment();
       }
     } catch (err) {
