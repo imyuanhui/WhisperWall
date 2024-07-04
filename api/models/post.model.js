@@ -21,18 +21,18 @@ const postSchema = new mongoose.Schema(
     },
     tag: {
       type: String,
-      default: "all",
+      required: true,
     },
     isPrivate: {
       type: Boolean,
       default: false,
       required: true,
     },
-    slug: {
-      type: String,
-      required: true,
-      unique: true,
-    },
+    // slug: {
+    //   type: String,
+    //   required: true,
+    //   unique: true,
+    // },
   },
   { timestamps: true }
 );
