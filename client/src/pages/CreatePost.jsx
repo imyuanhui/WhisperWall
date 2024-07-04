@@ -32,7 +32,6 @@ const CreatePost = () => {
   const [errMessage, setErrMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [isDraft, setIsDraft] = useState(true);
 
   const modules = {
     toolbar: [
@@ -97,10 +96,6 @@ const CreatePost = () => {
   }, [imgFile]);
 
   const handleSubmit = async (e) => {
-    if (isDraft) {
-      e.preventDefault();
-    }
-
     if (imgUploading) {
       setErrMessage("Please wait from image to upload");
       return;

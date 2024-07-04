@@ -14,11 +14,14 @@ import { FaMoon } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { signoutSuccess } from "../redux/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleSignout = async () => {
     try {
       const res = await fetch("/api/user/signout", { method: "POST" });
@@ -27,6 +30,7 @@ const Header = () => {
         console.log(data.message);
       } else {
         dispatch(signoutSuccess());
+        navigate("/");
       }
     } catch (error) {
       console.log(error.message);
