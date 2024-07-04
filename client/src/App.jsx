@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
 import CreatePost from "./pages/CreatePost";
 import ViewPost from "./pages/ViewPost";
+import UpdatePost from "./pages/UpdatePost";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/create-whisper" element={<CreatePost />} />
+          <Route path="/update-whisper/:postId" element={<UpdatePost />} />
         </Route>
         <Route path="/view-whisper/:postId" element={<ViewPost />} />
       </Routes>

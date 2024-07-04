@@ -88,7 +88,7 @@ const ViewPost = () => {
   }, [postId]);
 
   const handleEditPost = () => {
-    console.log("edit");
+    navigate(`/update-whisper/${postId}`);
   };
 
   const handleDeletePost = async () => {
