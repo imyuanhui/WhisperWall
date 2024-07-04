@@ -17,11 +17,8 @@ const ViewPost = () => {
   const [authorId, setAuthorId] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const [isOpen, setIsOpen] = useState(false);
-  const comments = [
-    "hellow what a beautiful day",
-    "Hi, I understand your anxiety",
-    "Fightn!!!!",
-  ];
+  const [postComments, setPostComments] = useState([]);
+  const [comment, setComment] = useState({});
 
   const getPost = async () => {
     try {
@@ -45,8 +42,19 @@ const ViewPost = () => {
     }
   };
 
+  const getComment = async () => {
+    try {
+      const res = await fetch(`/api/comment/get-comments?postId=${postId}`);
+      const { comments } = await res.json();
+      setPostComments(comments);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     getPost();
+    getComment();
   }, [postId]);
 
   const handleEditPost = () => {
@@ -81,18 +89,24 @@ const ViewPost = () => {
           )}
         </div>
         <div
-          className="pl-5 pr-5 lg:p-0 prose mt-5 font-serif"
+          className="pl-5 pr-5 lg:p-0 prose mt-5 mb-5 font-serif"
           dangerouslySetInnerHTML={{ __html: content }}
         />
         <HR.Text text="MESSAGE BOARD" />
-        {comments.length !== 0 && (
-          <div className="text-gray-600 flex flex-col gap-3">
-            {comments.map((comment) => (
-              <div>{comment}</div>
+        {postComments.length !== 0 && (
+          <div className="text-gray-500 flex flex-col gap-3 p-2 font-thin">
+            {postComments.map((comment) => (
+              <div className="flex flex-col border-2 border-dotted rounded-md p-2">
+                <span className="font-3xl">{comment.content}</span>
+                <div className="flex flex-col items-end">
+                  <span>--{comment.pseudonym}</span>
+                  <span>{formatTime(comment.updatedAt)}</span>
+                </div>
+              </div>
             ))}
           </div>
         )}
-        <div className="flex max-w-full gap-3 items-center p-3">
+        <div className="flex max-w-full gap-3 items-center p-2">
           {/* Comment */}
           <TextInput
             className="flex-1"
@@ -106,11 +120,27 @@ const ViewPost = () => {
             className="p-5"
           >
             <Drawer.Header title="Message" titleIcon={() => <></>} />
-            <Drawer.Items className="flex flex-col items-center">
-              <Textarea rows={6} />
-              <Button gradientDuoTone="pinkToOrange" pill className="mt-5">
-                Send
-              </Button>
+            <Drawer.Items className="flex flex-col items-end">
+              <Textarea
+                rows={6}
+                onChange={(e) =>
+                  setComment({ ...comment }, { content: e.target.value })
+                }
+              />
+              <div className="flex gap-3 items-center mt-5">
+                <TextInput
+                  placeholder="Your pseudonym"
+                  defaultValue={
+                    "whisperer" + Math.floor(Math.random() * 1000 + 1000)
+                  }
+                  onChange={(e) =>
+                    setComment({ ...comment }, { pseudonym: e.target.value })
+                  }
+                />
+                <Button gradientDuoTone="pinkToOrange" pill>
+                  Send
+                </Button>
+              </div>
             </Drawer.Items>
           </Drawer>
         </div>
