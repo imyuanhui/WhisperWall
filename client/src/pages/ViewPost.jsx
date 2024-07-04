@@ -92,7 +92,6 @@ const ViewPost = () => {
   };
 
   const handleDeletePost = async () => {
-    console.log("delete post" + postId);
     try {
       const res = await fetch(`/api/post/deletepost/:${postId}`, {
         method: "DELETE",
@@ -143,7 +142,21 @@ const ViewPost = () => {
   };
 
   const handleDeleteComment = async (e) => {
-    console.log("delete comment" + tempCommentId);
+    try {
+      const res = await fetch(`/api/comment/delete-comment/:${tempCommentId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setErrMessage(data.message);
+      } else {
+        setSuccessMessage("Post deleted successfully");
+        getComment();
+      }
+    } catch (err) {
+      setErrMessage(err.message);
+    }
   };
 
   return (

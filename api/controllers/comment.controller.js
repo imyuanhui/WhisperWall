@@ -32,6 +32,22 @@ export const getComments = async (req, res, next) => {
 
 export const deleteComment = async (req, res, next) => {
   try {
+    const commentId = req.params.commentId.slice(
+      1,
+      req.params.commentId.length
+    );
+    const commentToDel = await Comment.findById(commentId);
+
+    if (!req.user.isAdmin) {
+      return next(errorHandler(403, "You are not allowed to delete this post"));
+    }
+
+    try {
+      await Comment.deleteOne({ _id: commentId });
+      res.status(200).json(`Comment ${commentId} has been deleted`);
+    } catch (err) {
+      next(err);
+    }
   } catch (err) {
     next(err);
   }
