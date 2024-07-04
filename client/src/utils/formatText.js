@@ -1,7 +1,6 @@
 export const stripHtmlTags = (html) => {
-  const div = document.createElement("div");
-  div.innerHTML = html;
-  return div.textContent || div.innerText || "";
+  const strippedString = html.replace(/<\/?[^>]+(>|$)/g, " ").trim();
+  return strippedString;
 };
 export const truncateText = (text, maxLength) => {
   if (text.length <= maxLength) {
