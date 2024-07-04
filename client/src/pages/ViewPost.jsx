@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { formatTime } from "../utils/formatTime.js";
 import DOMPurify from "dompurify";
-import { Badge, Button, TextInput, Textarea } from "flowbite-react";
-import { HiClock } from "react-icons/hi";
-import { AiOutlineSend } from "react-icons/ai";
+import { Badge, Button, Drawer, TextInput, Textarea, HR } from "flowbite-react";
+import { HiClock, HiPencil } from "react-icons/hi";
+import { useSelector } from "react-redux";
 
 const ViewPost = () => {
   const { postId } = useParams();
@@ -14,6 +14,14 @@ const ViewPost = () => {
   const [updatedTime, setUpdatedTime] = useState("");
   const [content, setContent] = useState("");
   const [tag, setTag] = useState("");
+  const [authorId, setAuthorId] = useState("");
+  const { currentUser } = useSelector((state) => state.user);
+  const [isOpen, setIsOpen] = useState(false);
+  const comments = [
+    "hellow what a beautiful day",
+    "Hi, I understand your anxiety",
+    "Fightn!!!!",
+  ];
 
   const getPost = async () => {
     try {
@@ -29,9 +37,9 @@ const ViewPost = () => {
       const cleanContent = DOMPurify.sanitize(rawContent);
       setContent(cleanContent);
       setTag(posts[0].tag);
-
       const rawTime = posts[0].updatedAt;
       setUpdatedTime(formatTime(rawTime));
+      setAuthorId(posts[0].userId);
     } catch (err) {
       setErrMessage(err.message);
     }
@@ -40,6 +48,11 @@ const ViewPost = () => {
   useEffect(() => {
     getPost();
   }, [postId]);
+
+  const handleEditPost = () => {
+    console.log("edit");
+  };
+
   return (
     <div className="flex w-screen justify-center pt-10 pb-10">
       <div className="flex flex-col gap-2 lg:w-2/5 max-w-full">
@@ -60,17 +73,46 @@ const ViewPost = () => {
           <div className="font-serif">
             from <span className="font-semibold">{pseudonym}</span>
           </div>
+          {currentUser._id === authorId && (
+            <HiPencil
+              className="h-5 w-5 ml-2 hover:text-pink-500"
+              onClick={handleEditPost}
+            />
+          )}
         </div>
         <div
-          className="pl-5 pr-5 lg:p-0 prose mt-5"
+          className="pl-5 pr-5 lg:p-0 prose mt-5 font-serif"
           dangerouslySetInnerHTML={{ __html: content }}
         />
-        <div className="flex max-w-full gap-3 items-center">
+        <HR.Text text="MESSAGE BOARD" />
+        {comments.length !== 0 && (
+          <div className="text-gray-600 flex flex-col gap-3">
+            {comments.map((comment) => (
+              <div>{comment}</div>
+            ))}
+          </div>
+        )}
+        <div className="flex max-w-full gap-3 items-center p-3">
           {/* Comment */}
-          <Textarea className="flex-1" />
-          <Button gradientDuoTone="pinkToOrange" pill>
-            <AiOutlineSend className="h-6 w-6" />
-          </Button>
+          <TextInput
+            className="flex-1"
+            onClick={() => setIsOpen(true)}
+            placeholder="Leave your message..."
+          />
+          <Drawer
+            open={isOpen}
+            onClose={() => setIsOpen(false)}
+            position="bottom"
+            className="p-5"
+          >
+            <Drawer.Header title="Message" titleIcon={() => <></>} />
+            <Drawer.Items className="flex flex-col items-center">
+              <Textarea rows={6} />
+              <Button gradientDuoTone="pinkToOrange" pill className="mt-5">
+                Send
+              </Button>
+            </Drawer.Items>
+          </Drawer>
         </div>
       </div>
     </div>
