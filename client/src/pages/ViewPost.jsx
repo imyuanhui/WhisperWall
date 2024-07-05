@@ -21,8 +21,9 @@ import {
   HiOutlineTrash,
   HiOutlineExclamationCircle,
 } from "react-icons/hi";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setShouldRefresh } from "../redux/refreshSlice.js";
 
 const ViewPost = () => {
   const { postId } = useParams();
@@ -44,6 +45,7 @@ const ViewPost = () => {
   const [itemToDel, setItemToDel] = useState(null);
   const [tempCommentId, setTempCommentId] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const getPost = async () => {
     setErrMessage(null);
@@ -102,6 +104,7 @@ const ViewPost = () => {
         setErrMessage(data.message);
       } else {
         setSuccessMessage("Whisper deleted successfully");
+        dispatch(setShouldRefresh(true));
         navigate(-1);
       }
     } catch (err) {

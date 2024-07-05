@@ -1,20 +1,32 @@
 import React from "react";
 import DashCard from "./DashCard";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setShouldRefresh } from "../redux/refreshSlice";
 
 const DashPosts = () => {
   const [posts, setPosts] = useState([]);
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser._id);
+  const { shouldRefresh } = useSelector((state) => state.refresh);
+  const dispatch = useDispatch();
+
+  const getPosts = async () => {
+    const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
+    const data = await res.json();
+    setPosts(data.posts);
+  };
+
   useEffect(() => {
-    const getPosts = async () => {
-      const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
-      const data = await res.json();
-      setPosts(data.posts);
-    };
     getPosts();
   }, []);
+
+  useEffect(() => {
+    if (shouldRefresh) {
+      window.location.reload();
+      dispatch(setShouldRefresh(false));
+    }
+  }, [shouldRefresh]);
+
   return !posts || posts.length === 0 ? (
     <div className="flex flex-col items-center justify-center h-full">
       <p className="text-center mb-4">You don't have any whispers yet.</p>
