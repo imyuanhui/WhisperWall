@@ -19,8 +19,12 @@ import { HiOutlineUpload } from "react-icons/hi";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setShouldRefresh } from "../redux/refreshSlice.js";
 
 const CreatePost = () => {
+  const { shouldRefresh } = useSelector((state) => state.refresh);
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({});
   const [isPrivate, setIsPrivate] = useState(false);
   const [imgFile, setImgFile] = useState(null);
@@ -101,8 +105,6 @@ const CreatePost = () => {
       setErrMessage("Please wait from image to upload");
       return;
     }
-
-    console.log(formData);
     try {
       setLoading(true);
       setErrMessage(null);
@@ -115,6 +117,7 @@ const CreatePost = () => {
       if (!res.ok) {
         setErrMessage(data.message);
       } else {
+        dispatch(setShouldRefresh(true));
         navigate(-1);
       }
       setLoading(false);

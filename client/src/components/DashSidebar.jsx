@@ -7,6 +7,9 @@ import {
   HiViewBoards,
   HiViewGridAdd,
   HiOutlineExclamationCircle,
+  HiViewGrid,
+  HiSparkles,
+  HiStatusOnline,
 } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -49,9 +52,6 @@ const DashSidebar = () => {
       <Sidebar className="w-full md:w-56 h-full">
         <Sidebar.Items>
           <Sidebar.ItemGroup>
-            <Sidebar.Item href="/" icon={HiChartPie}>
-              Home
-            </Sidebar.Item>
             <Sidebar.Item
               href="?tab=profile"
               active={tab === "profile"}
@@ -64,12 +64,15 @@ const DashSidebar = () => {
             <Sidebar.Item
               href="?tab=my-whisper"
               active={tab === "my-whisper"}
-              icon={HiViewBoards}
+              icon={HiSparkles}
             >
               Whispers
             </Sidebar.Item>
             <Sidebar.Item href="/create-whisper" icon={HiViewGridAdd}>
               Create
+            </Sidebar.Item>
+            <Sidebar.Item href="/" icon={HiStatusOnline}>
+              Explore
             </Sidebar.Item>
           </Sidebar.ItemGroup>
           <Sidebar.ItemGroup>
