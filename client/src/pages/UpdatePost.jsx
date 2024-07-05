@@ -19,6 +19,8 @@ import { HiOutlineUpload } from "react-icons/hi";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setShouldRefresh } from "../redux/refreshSlice";
 
 const UpdatePost = () => {
   const { postId } = useParams();
@@ -31,6 +33,8 @@ const UpdatePost = () => {
   const [errMessage, setErrMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { shouldRefresh } = useSelector((state) => state.refresh);
 
   const modules = {
     toolbar: [
@@ -127,6 +131,7 @@ const UpdatePost = () => {
       if (!res.ok) {
         setErrMessage(data.message);
       } else {
+        dispatch(setShouldRefresh(true));
         navigate(-1);
       }
       setLoading(false);
