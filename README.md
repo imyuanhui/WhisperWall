@@ -14,23 +14,33 @@ The project is deployed and accessible at [https://whisperwall-d2ry.onrender.com
 ### As a Registered User:
 
 1. [x] Sign in to the WhisperWall account.
-       **Explore Whispers**
-2. [x] Visit the homepage of WhisperWall containing 12 random whisper cards.
-3. [x] Get new random whisper cards.
-4. [x] View the details of each whisper, including full content, tag, created time, pseudonym, header image, and message board.
-       **Create Whispers Anonymously**
-5. [x] Create new whispers using a randomly generated pseudonym or customized pseudonym.
-       **React to Whispers**
-6. [x] Leave messages to whispers using a randomly generated pseudonym or customized pseudonym.
-       **Manage Own Whispers**
-7. [x] Update and delete own whispers.
-       **User Dashboard**
-8. [x] **Profile**: View and update own profile.
-9. [x] **Whispers**: View own whispers.
-10. [x] **Create**: Create new whispers.
-11. [x] **Explore**: Explore whispers.
 
-**Extra Authority of the Administrator**:
+#### Explore Whispers
+
+1. [x] Visit the homepage of WhisperWall containing 12 random whisper cards.
+1. [x] Get new random whisper cards.
+1. [x] View the details of each whisper, including full content, tag, created time, pseudonym, header image, and message board.
+
+#### Create Whispers Anonymously
+
+1. [x] Create new whispers using a randomly generated pseudonym or customized pseudonym.
+
+#### React to Whispers
+
+1. [x] Leave messages to whispers using a randomly generated pseudonym or customized pseudonym.
+
+#### Manage Own Whispers
+
+1. [x] Update and delete own whispers.
+
+#### User Dashboard
+
+1. [x] **Profile**: View and update own profile.
+1. [x] **Whispers**: View own whispers.
+1. [x] **Create**: Create new whispers.
+1. [x] **Explore**: Explore whispers.
+
+#### Extra Authority of the Administrator
 
 1.  [x] View the profile of user accounts except password.
 2.  [x] Delete user accounts except for admin or demo account.
