@@ -40,7 +40,7 @@ const Header = () => {
     <>
       <Navbar className="border-b-2">
         <Link
-          to="/dashboard?tab=whispers"
+          to="/"
           className="font-mono self-center whitespace-nowrap text-sm sm:text-xl font-semibold"
         >
           <span className="px-2 py-1 rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-white">
@@ -59,9 +59,9 @@ const Header = () => {
           <AiOutlineSearch />
         </Button> */}
         <div className="flex gap-2 md:order-2">
-          <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
+          {/* <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
             <FaMoon />
-          </Button>
+          </Button> */}
           {currentUser ? (
             <Dropdown
               arrowIcon={false}
@@ -75,13 +75,21 @@ const Header = () => {
               }
             >
               <Dropdown.Header>
-                <span className="block text-sm">@{currentUser.username}</span>
+                <span className="block text-sm">{currentUser.username}</span>
                 <span className="block text-sm font-medium truncate">
                   {currentUser.email}
                 </span>
               </Dropdown.Header>
               <Link to="/dashboard?tab=profile">
                 <Dropdown.Item>Profile</Dropdown.Item>
+              </Link>
+              {currentUser.isAdmin && (
+                <Link to="/dashboard?tab=users">
+                  <Dropdown.Item>Users</Dropdown.Item>
+                </Link>
+              )}
+              <Link to="/dashboard?tab=whispers">
+                <Dropdown.Item>Whispers</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
               <Dropdown.Item onClick={() => setOpenModal(true)}>
