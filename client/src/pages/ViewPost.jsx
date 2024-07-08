@@ -63,7 +63,7 @@ const ViewPost = () => {
       const cleanContent = DOMPurify.sanitize(rawContent);
       setContent(cleanContent);
       setTag(posts[0].tag);
-      const rawTime = posts[0].updatedAt;
+      const rawTime = posts[0].createdAt;
       setUpdatedTime(formatTime(rawTime));
       setAuthorId(posts[0].userId);
       setComment({ ...comment, postId: posts[0]._id });
@@ -223,7 +223,7 @@ const ViewPost = () => {
                 <span className="font-3xl">{comment.content}</span>
                 <div className="flex flex-col items-end">
                   <span>--{comment.pseudonym}</span>
-                  <span>{formatTime(comment.updatedAt)}</span>
+                  <span>{formatTime(comment.createdAt)}</span>
                   {currentUser.isAdmin && (
                     <HiOutlineTrash
                       className="h-6 w-6 mt-3 hover:text-pink-500"
