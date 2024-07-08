@@ -24,7 +24,11 @@ The project is deployed and accessible at [https://whisperwall-d2ry.onrender.com
 6. [x] Leave messages to whispers using a randomly generated pseudonym or customized pseudonym.
        **Manage Own Whispers**
 7. [x] Update and delete own whispers.
-       **User Dashboard** 1. [x] **Profile**: View and update own profile. 2. [x] **Whispers**: View own whispers. 3. [x] **Create**: Create new whispers. 4. [x] **Explore**: Explore whispers.
+       **User Dashboard**
+8. [x] **Profile**: View and update own profile.
+9. [x] **Whispers**: View own whispers.
+10. [x] **Create**: Create new whispers.
+11. [x] **Explore**: Explore whispers.
 
 **Extra Authority of the Administrator**:
 
