@@ -2,14 +2,12 @@ import React from "react";
 import { Sidebar, Modal, Button } from "flowbite-react";
 import {
   HiArrowSmRight,
-  HiChartPie,
   HiUser,
-  HiViewBoards,
   HiViewGridAdd,
   HiOutlineExclamationCircle,
-  HiViewGrid,
   HiSparkles,
   HiStatusOnline,
+  HiUserGroup,
 } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -61,9 +59,19 @@ const DashSidebar = () => {
             >
               Profile
             </Sidebar.Item>
+            {currentUser.isAdmin && (
+              <Sidebar.Item
+                href="?tab=users"
+                active={tab === "users"}
+                icon={HiUserGroup}
+                labelColor="dark"
+              >
+                Users
+              </Sidebar.Item>
+            )}
             <Sidebar.Item
-              href="?tab=my-whisper"
-              active={tab === "my-whisper"}
+              href="?tab=whispers"
+              active={tab === "whispers"}
               icon={HiSparkles}
             >
               Whispers
