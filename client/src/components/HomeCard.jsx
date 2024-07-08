@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 const HomeCard = ({ post }) => {
   const plainText = stripHtmlTags(post.content);
-  const truncatedText = truncateText(plainText, 150);
+  const truncatedText = truncateText(plainText, 85);
   const { currentUser } = useSelector((state) => state.user);
   return (
     <Card
@@ -14,7 +14,7 @@ const HomeCard = ({ post }) => {
       }}
       href={currentUser ? `/view-whisper/${post._id}` : `/sign-up`}
     >
-      <span className="font-mono p-4 text-3xl md:text-2xl lg:text-xl">
+      <span className="font-mono p-2 text-3xl md:text-2xl lg:text-xl bg-white bg-opacity-70 w-full h-full rounded-md overflow-hidden">
         {truncatedText}
       </span>
     </Card>

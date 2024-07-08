@@ -24,7 +24,7 @@ const DashCard = ({ post }) => {
       }}
       href={`/view-whisper/${post._id}`}
     >
-      <span className="font-mono p-4 text-xl md:text-lg lg:text-sm bg-white bg-opacity-50 w-full h-full overflow-hidden">
+      <span className="font-mono p-2 text-xl md:text-lg lg:text-sm bg-white bg-opacity-70 w-full h-full rounded-md overflow-hidden">
         {truncatedText}
       </span>
     </Card>
