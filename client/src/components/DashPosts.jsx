@@ -2,13 +2,13 @@ import React from "react";
 import DashCard from "./DashCard";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setShouldRefresh } from "../redux/refreshSlice";
+// import { setShouldRefresh } from "../redux/refreshSlice";
 import { Alert, Pagination, Spinner } from "flowbite-react";
 
 const DashPosts = () => {
   const [posts, setPosts] = useState([]);
   const { currentUser } = useSelector((state) => state.user);
-  const { shouldRefresh } = useSelector((state) => state.refresh);
+  // const { shouldRefresh } = useSelector((state) => state.refresh);
   const [errMessage, setErrMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -66,12 +66,12 @@ const DashPosts = () => {
     getPosts();
   }, []);
 
-  useEffect(() => {
-    if (shouldRefresh) {
-      window.location.reload();
-      dispatch(setShouldRefresh(false));
-    }
-  }, [shouldRefresh]);
+  // useEffect(() => {
+  //   if (shouldRefresh) {
+  //     window.location.reload();
+  //     dispatch(setShouldRefresh(false));
+  //   }
+  // }, [shouldRefresh]);
 
   return (
     <>

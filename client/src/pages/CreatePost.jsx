@@ -20,7 +20,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setShouldRefresh } from "../redux/refreshSlice.js";
+// import { setShouldRefresh } from "../redux/refreshSlice.js";
 
 const CreatePost = () => {
   const { shouldRefresh } = useSelector((state) => state.refresh);
@@ -118,8 +118,8 @@ const CreatePost = () => {
       if (!res.ok) {
         setErrMessage(data.message);
       } else {
-        dispatch(setShouldRefresh(true));
-        navigate(-1);
+        // dispatch(setShouldRefresh(true));
+        navigate(`/view-whisper/${data._id}`);
       }
       setLoading(false);
     } catch (err) {

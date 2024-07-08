@@ -2,16 +2,18 @@ import React from "react";
 import HomeCard from "../components/HomeCard";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setShouldRefresh } from "../redux/refreshSlice";
-import { HiOutlineRefresh } from "react-icons/hi";
+// import { setShouldRefresh } from "../redux/refreshSlice";
+import { HiOutlineRefresh, HiViewGridAdd } from "react-icons/hi";
 import { Button, Spinner, Tooltip } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const dispatch = useDispatch();
-  const { shouldRefresh } = useSelector((state) => state.refresh);
+  // const { shouldRefresh } = useSelector((state) => state.refresh);
   const [loading, setLoading] = useState(false);
   const [errMessage, setErrMessage] = useState(null);
+  const navigate = useNavigate();
 
   const getPosts = async () => {
     setErrMessage(null);
@@ -37,12 +39,12 @@ const Home = () => {
     getPosts();
   }, []);
 
-  useEffect(() => {
-    if (shouldRefresh) {
-      window.location.reload();
-      dispatch(setShouldRefresh(false));
-    }
-  }, [shouldRefresh]);
+  // useEffect(() => {
+  //   if (shouldRefresh) {
+  //     window.location.reload();
+  //     dispatch(setShouldRefresh(false));
+  //   }
+  // }, [shouldRefresh]);
 
   const refreshPage = () => {
     window.location.reload();
@@ -71,11 +73,20 @@ const Home = () => {
         >
           <Button
             className="rounded-full w-12 h-12"
-            gradientMonochrome="pink"
+            gradientMonochrome="failure"
             onClick={refreshPage}
             disabled={loading}
           >
             <HiOutlineRefresh className="w-6 h-6" />
+          </Button>
+        </Tooltip>
+        <Tooltip content="Create a new whisper" style="dark" placement="left">
+          <Button
+            className="rounded-full w-12 h-12 mt-2"
+            gradientMonochrome="pink"
+            onClick={() => navigate("/create-whisper")}
+          >
+            <HiViewGridAdd className="w-6 h-6" />
           </Button>
         </Tooltip>
       </div>
