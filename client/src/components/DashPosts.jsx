@@ -52,7 +52,7 @@ const DashPosts = () => {
           setLoading(false);
         } else {
           setPosts(data.posts);
-          setTotalPosts(data.total);
+          setTotalPosts(posts.length);
           setLoading(false);
         }
       }
