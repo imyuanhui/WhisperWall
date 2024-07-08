@@ -15,7 +15,6 @@ const DashCard = ({ post }) => {
 
   const plainText = stripHtmlTags(post.content);
   const truncatedText = truncateText(plainText, 150);
-  console.log(post.image);
   return (
     <Card
       className="shadow-md overflow-hidden bg-cover bg-center h-60 md:h-48 lg:h-48"

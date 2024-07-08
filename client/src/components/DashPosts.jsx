@@ -15,7 +15,6 @@ const DashPosts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
   const onPageChange = (page) => {
-    console.log("page is changed to", page);
     setCurrentPage(page);
   };
 

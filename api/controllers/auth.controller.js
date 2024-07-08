@@ -71,7 +71,6 @@ export const google = async (req, res, next) => {
   try {
     const user = await User.findOne({ email });
     if (user) {
-      console.log(user);
       const token = jwt.sign(
         { id: user._id, isAdmin: user.isAdmin },
         process.env.JWT_SECRET
