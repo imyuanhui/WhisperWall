@@ -65,7 +65,8 @@ const CreatePost = () => {
     setImgUploadErr(null);
     setImgUploading(true);
     const storage = getStorage(app);
-    const fileName = new Date().getTime() + imgFile.name;
+    const fileName =
+      new Date().getTime() + imgFile.name.replace(/[\s\W]+/g, "");
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, imgFile);
     uploadTask.on(
