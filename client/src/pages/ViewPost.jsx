@@ -12,6 +12,7 @@ import {
   Alert,
   Spinner,
   Modal,
+  FloatingLabel,
 } from "flowbite-react";
 import {
   HiClock,
@@ -130,7 +131,6 @@ const ViewPost = () => {
         pseudonym: "Whisper" + Math.floor(Math.random() * 1000 + 1000),
       });
     }
-    console.log(comment);
     try {
       setAddCommentLoading(true);
       const res = await fetch("/api/comment/add-comment", {
@@ -146,6 +146,7 @@ const ViewPost = () => {
         setIsOpen(false);
         getComment();
       }
+      setAddCommentLoading(false);
     } catch (err) {
       setAddCommentErr(err.message);
       setAddCommentLoading(false);
@@ -254,12 +255,56 @@ const ViewPost = () => {
           )}
           <div className="flex max-w-full gap-3 items-center p-2">
             {/* Comment */}
-            <TextInput
+            <form
+              className="w-full flex flex-col items-end"
+              onSubmit={handleAddComment}
+            >
+              <Textarea
+                rows={6}
+                onChange={(e) =>
+                  setComment({ ...comment, content: e.target.value })
+                }
+                required
+              />
+              <div className="flex gap-3 items-center mt-5">
+                <FloatingLabel
+                  variant="outlined"
+                  label="Pseudonym"
+                  onChange={(e) =>
+                    setComment({ ...comment, pseudonym: e.target.value })
+                  }
+                />
+                {/* <TextInput
+                  placeholder="Your pseudonym"
+                  onChange={(e) =>
+                    setComment({ ...comment, pseudonym: e.target.value })
+                  }
+                /> */}
+                <Button
+                  gradientDuoTone="pinkToOrange"
+                  pill
+                  type="submit"
+                  disabled={addCommentLoading}
+                  className="-mt-2"
+                >
+                  {addCommentLoading ? (
+                    <>
+                      <Spinner size="sm" />
+                      <span className="pl-3">Loading...</span>
+                    </>
+                  ) : (
+                    "Send"
+                  )}
+                </Button>
+              </div>
+            </form>
+            {addCommentErr && <Alert color="failure">{errMessage}</Alert>}
+            {/* <TextInput
               className="flex-1"
               onClick={() => setIsOpen(true)}
               placeholder="Leave your message..."
-            />
-            <Drawer
+            /> */}
+            {/* <Drawer
               open={isOpen}
               onClose={() => setIsOpen(false)}
               position="bottom"
@@ -302,9 +347,9 @@ const ViewPost = () => {
                     </Button>
                   </div>
                 </form>
-                {/* {addCommentErr && <Alert color="failure">{errMessage}</Alert>} */}
+                {addCommentErr && <Alert color="failure">{errMessage}</Alert>}
               </Drawer.Items>
-            </Drawer>
+            </Drawer> */}
           </div>
         </div>
         <Modal
