@@ -1,124 +1,72 @@
 # WhisperWall
 
 WhisperWall is an anonymous social blogging platform where users can share and interact with posts without revealing their identities, fostering open and honest communication.
+The project is deployed and accessible at [https://whisperwall-d2ry.onrender.com](https://whisperwall-d2ry.onrender.com).
 
 ## User Stories
 
-### Anonymous Posting
+### As a Guest User:
 
-1. **User can post anonymously so that they can share their thoughts without revealing their identity.**
-2. **User can comment on posts anonymously so that they can participate in discussions without revealing their identity.**
+1. [x] Sign up with a unique username or Google account.
+2. [x] Visit the homepage of WhisperWall containing 12 random whisper cards.
+3. [x] Get new random whisper cards.
 
-### Explore Feeds
+### As a Registered User:
 
-3. **User can explore different categories or tags so that they can find posts that interest them.**
-4. **User can see a random feed of posts so that they can discover new content from strangers.**
+1. [x] Sign in to the WhisperWall account.
+       **Explore Whispers**
+2. [x] Visit the homepage of WhisperWall containing 12 random whisper cards.
+3. [x] Get new random whisper cards.
+4. [x] View the details of each whisper, including full content, tag, created time, pseudonym, header image, and message board.
+       **Create Whispers Anonymously**
+5. [x] Create new whispers using a randomly generated pseudonym or customized pseudonym.
+       **React to Whispers**
+6. [x] Leave messages to whispers using a randomly generated pseudonym or customized pseudonym.
+       **Manage Own Whispers**
+7. [x] Update and delete own whispers.
+       **User Dashboard** 1. [x] **Profile**: View and update own profile. 2. [x] **Whispers**: View own whispers. 3. [x] **Create**: Create new whispers. 4. [x] **Explore**: Explore whispers.
 
-### Reactions and Engagement
+**Extra Authority of the Administrator**:
 
-5. **User can like or react to posts anonymously so that they can express their feelings without revealing their identity.**
+1.  [x] View the profile of user accounts except password.
+2.  [x] Delete user accounts except for admin or demo account.
+3.  [x] View all whispers in update order on the dashboard.
+4.  [x] Delete or update whispers.
+5.  [x] Delete messages.
 
-### Content Moderation
+## Features
 
-6. **User can report inappropriate content so that the community remains respectful and safe.**
-7. **Moderator can review reported content so that they can ensure the platform's guidelines are upheld.**
+1. **User Authentication**: Users can sign up and sign in with a unique username or a Google account.
+2. **Profile Management**: Users can update their username, email, password, and avatar.
+3. **Anonymous Posting**: Create and interact with posts without revealing personal identity.
+4. **Whisper Cards**: Display 12 random whispers on the homepage, with the ability to refresh for new ones.
+5. **Detailed Whisper View**: View full content, tags, created time, pseudonym, header image, and message board for each whisper.
+6. **Interaction**: Leave messages on whispers using a randomly generated or customized pseudonym.
+7. **Whisper Management**: Update and delete own whispers.
+8. **User Dashboard**: View and update profile, view own whispers, and create new whispers.
+9. **Admin Authority**: Administrators can view user profiles, delete user accounts (except admin or demo accounts), view all whispers, and manage whispers and messages.
 
-### Secure Messaging
+## Technologies Used
 
-8. **User can send and receive private messages without revealing their identity so that they can communicate securely.**
+- **Frontend**: React, TailwindCSS, Flowbite
+- **Backend**: Node.js, Express
+- **Database**: MongoDB
+- **Authentication**: JWT, Google OAuth
+- **State Management**: Redux Toolkit
+- **Hosting**: Firebase, Heroku, Render
+- **Version Control**: Git, GitHub
 
-### Search and Filter
+## Update Log
 
-9. **User can search for posts by keywords or tags so that they can find specific content.**
-10. **User can filter posts by relevance, popularity, or recency so that they can see the most pertinent content.**
+### Version 1.0.0
 
-### User Dashboard
-
-11. **User can see their posts and reactions in a dashboard so that they can track their activity on the platform.**
-12. **User can view analytics on their post engagement so that they can understand how others are interacting with their content.**
-
-### Customization
-
-13. **User can customize their posts with different themes and text formatting options so that their posts stand out.**
-14. **User can add images, GIFs, and links to their posts so that they can make their posts more engaging.**
-
-### Notifications
-
-15. **User can receive notifications for post interactions and new comments so that they can stay updated.**
-16. **User can manage their notification preferences so that they only receive notifications that are important to them.**
-
-## Development Plan
-
-### Phase 1: Project Setup and Basic Features
-
-1. **Project Initialization**
-
-   - Set up the project repository and structure.
-   - Install and configure necessary tools and dependencies (Node.js, MongoDB, Express, React).
-
-2. **User Authentication**
-
-   - Implement anonymous user session management.
-   - Ensure secure and anonymous user sessions without storing personal data.
-
-3. **Anonymous Posting**
-
-   - Develop the frontend for creating posts.
-   - Implement backend API for saving posts to the database.
-
-4. **Explore Feeds**
-
-   - Create the frontend for exploring posts by categories/tags.
-   - Implement the backend API to fetch posts based on filters.
-
-5. **Commenting System**
-   - Develop the frontend for commenting on posts.
-   - Implement the backend API for saving and retrieving comments.
-
-### Phase 2: Engagement and Moderation
-
-1. **Reactions and Engagement**
-
-   - Implement the frontend for liking/reacting to posts.
-   - Develop the backend API for managing reactions.
-
-2. **Content Moderation**
-
-   - Implement reporting functionality on the frontend.
-   - Develop the backend system for content review and moderation.
-
-3. **Search and Filter**
-   - Develop advanced search functionality on the frontend.
-   - Implement backend support for searching and filtering posts.
-
-### Phase 3: Enhanced User Experience
-
-1. **User Dashboard**
-
-   - Create a personalized dashboard to display user posts and reactions.
-   - Implement backend support for user analytics.
-
-2. **Customization**
-
-   - Develop features for post customization (themes, formatting, adding images/GIFs/links).
-   - Ensure the frontend supports these customization options.
-
-3. **Secure Messaging**
-   - Implement the frontend and backend for private messaging between users.
-   - Ensure end-to-end encryption for secure communication.
-
-### Phase 4: Final Touches and Deployment
-
-1. **Notifications**
-
-   - Implement notification system for post interactions and comments.
-   - Develop user settings for managing notification preferences.
-
-2. **Testing and QA**
-
-   - Conduct thorough testing of all features (unit tests, integration tests, and user acceptance tests).
-   - Perform security audits to ensure data protection and anonymity.
-
-3. **Deployment**
-   - Set up production environment and deploy the application.
-   - Monitor and maintain the application post-launch, addressing any issues that arise.
+- Initial release of WhisperWall
+- Implemented user authentication (sign up, sign in)
+- Created homepage displaying 12 random whispers
+- Added functionality to refresh whispers
+- Enabled viewing details of whispers
+- Allowed anonymous creation of whispers
+- Added message board for whispers
+- Implemented profile management (view and update profile)
+- Created user dashboard (profile, whispers, create, explore)
+- Provided admin authority features (view profiles, delete accounts, manage whispers and messages)
