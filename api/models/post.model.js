@@ -13,7 +13,7 @@ const postSchema = new mongoose.Schema(
     image: {
       type: String,
       default:
-        "https://cdn5.vectorstock.com/i/1000x1000/05/54/seamless-texture-a-cartoon-brick-wall-vector-25670554.jpg",
+        "https://firebasestorage.googleapis.com/v0/b/whisper-wall-294a0.appspot.com/o/1720425753943headerImage_default.jpg?alt=media&token=5170c6a3-afd4-4704-be02-dad77f404c51",
     },
     pseudonym: {
       type: String,

@@ -80,7 +80,6 @@ const DashProfile = () => {
 
   const handleChange = (e) => {
     setFormData(Object.assign(formData, { [e.target.id]: e.target.value }));
-    console.log(formData);
   };
 
   const handleUpdate = async (e) => {

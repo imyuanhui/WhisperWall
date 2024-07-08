@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
     profilePicture: {
       type: String,
       default:
-        "https://image.freepik.com/free-vector/woman-whispering-into-someone-ear-telling-her-something-secret_37029-5.jpg",
+        "https://firebasestorage.googleapis.com/v0/b/whisper-wall-294a0.appspot.com/o/1720426357307avatar_default.jpg?alt=media&token=71a188e4-136c-4772-89ce-6ffeceea0d94",
     },
     isAdmin: {
       type: Boolean,
