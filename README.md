@@ -67,7 +67,7 @@ The project is deployed and accessible at [https://whisperwall-d2ry.onrender.com
 - **Database**: MongoDB
 - **Authentication**: JWT, Google OAuth
 - **State Management**: Redux Toolkit
-- **Hosting**: Firebase, Heroku, Render
+- **Hosting**: Firebase, Render
 - **Version Control**: Git, GitHub
 
 ## Update Log

@@ -58,6 +58,12 @@ const Header = () => {
         {/* <Button className="w-12 h-10 lg:hidden" color="gray" pill>
           <AiOutlineSearch />
         </Button> */}
+        <Navbar.Collapse>
+          <Navbar.Link href="#about">About</Navbar.Link>
+          <Navbar.Link href="#plans">Plans</Navbar.Link>
+          <Navbar.Link href="#contact">Contact</Navbar.Link>
+        </Navbar.Collapse>
+
         <div className="flex gap-2 md:order-2">
           {/* <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
             <FaMoon />

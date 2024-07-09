@@ -10,13 +10,15 @@ import PrivateRoute from "./components/PrivateRoute";
 import CreatePost from "./pages/CreatePost";
 import ViewPost from "./pages/ViewPost";
 import UpdatePost from "./pages/UpdatePost";
+import LandingPage from "./pages/LandingPage";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/explore" element={<Home />} />
         <Route path="/sign-in" element={<Signin />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route element={<PrivateRoute />}>
