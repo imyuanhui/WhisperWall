@@ -12,6 +12,7 @@ import ViewPost from "./pages/ViewPost";
 import UpdatePost from "./pages/UpdatePost";
 import LandingPage from "./pages/LandingPage";
 import Purchase from "./pages/Purchase";
+import { io } from "socket.io-client";
 
 export default function App() {
   return (

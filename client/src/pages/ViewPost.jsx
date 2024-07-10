@@ -129,6 +129,23 @@ const ViewPost = () => {
     }
   };
 
+  const addNotification = async () => {
+    try {
+      const res = await fetch("/api/notification/add-notification", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: currentUser._id,
+          postId: postId,
+          content: comment.content.slice(0, 50),
+        }),
+      });
+      const data = await res.json();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleAddComment = async (e) => {
     e.preventDefault();
     setAddCommentLoading(false);
