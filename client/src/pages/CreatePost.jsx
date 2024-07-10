@@ -202,14 +202,14 @@ const CreatePost = () => {
               onChange={(val) => setFormData({ ...formData, content: val })}
               required
             />
-            <div className="flex gap-3 items-center mt-2">
+            {/* <div className="flex gap-3 items-center mt-2">
               <Label htmlFor="private" value="Set it private?" />
               <ToggleSwitch
                 id="private"
                 checked={isPrivate}
                 onChange={setIsPrivate}
               />
-            </div>
+            </div> */}
           </div>
         </div>
 

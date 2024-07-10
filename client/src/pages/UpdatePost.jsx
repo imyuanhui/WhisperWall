@@ -219,7 +219,7 @@ const UpdatePost = () => {
               onChange={(val) => setFormData({ ...formData, content: val })}
               required
             />
-            <div className="flex gap-3 items-center mt-2">
+            {/* <div className="flex gap-3 items-center mt-2">
               <Label htmlFor="private" value="Set it private?" />
               <ToggleSwitch
                 id="private"
@@ -228,7 +228,7 @@ const UpdatePost = () => {
                   setFormData({ ...formData, isPrivate: e.targe.value })
                 }
               />
-            </div>
+            </div> */}
           </div>
         </div>
 
