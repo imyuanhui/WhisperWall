@@ -8,7 +8,7 @@ import {
   TextInput,
   Clipboard,
 } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   signInStart,
@@ -18,8 +18,12 @@ import {
 import OAuth from "../components/OAuth";
 
 const Signin = () => {
-  const [formData, setFormData] = useState({});
+  const localUsername = localStorage.getItem("username")
+    ? localStorage.getItem("username")
+    : "";
+  const [formData, setFormData] = useState({ username: localUsername });
   const [loading, setLoading] = useState(false);
+  const [remember, setRemember] = useState(false);
   const [errMessage, setErrMessage] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,6 +34,11 @@ const Signin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (remember) {
+      localStorage.setItem("username", formData.username);
+    } else {
+      localStorage.clear();
+    }
     try {
       setLoading(true);
       setErrMessage(null);
@@ -48,7 +57,7 @@ const Signin = () => {
       if (res.ok) {
         setLoading(false);
         dispatch(signInSuccess(data));
-        navigate("/");
+        navigate("/explore");
       }
     } catch (err) {
       setLoading(false);
@@ -106,6 +115,7 @@ const Signin = () => {
                 type="text"
                 placeholder="username"
                 required
+                defaultValue={localUsername}
                 onChange={handleChange}
               />
             </div>
@@ -122,7 +132,7 @@ const Signin = () => {
               />
             </div>
             <div className="flex items-center gap-2">
-              <Checkbox id="remember" />
+              <Checkbox id="remember" onChange={setRemember} />
               <Label htmlFor="remember">Remember me</Label>
             </div>
             <Button
