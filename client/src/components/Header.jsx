@@ -40,7 +40,7 @@ const Header = () => {
     <>
       <Navbar className="border-b-2">
         <Link
-          to="/"
+          to="/explore"
           className="font-mono self-center whitespace-nowrap text-sm sm:text-xl font-semibold"
         >
           <span className="px-2 py-1 rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-white">
@@ -59,9 +59,9 @@ const Header = () => {
           <AiOutlineSearch />
         </Button> */}
         <Navbar.Collapse>
-          <Navbar.Link href="#about">About</Navbar.Link>
-          <Navbar.Link href="#plans">Plans</Navbar.Link>
-          <Navbar.Link href="#contact">Contact</Navbar.Link>
+          <Navbar.Link href="/#about">About</Navbar.Link>
+          <Navbar.Link href="/#plans">Plans</Navbar.Link>
+          <Navbar.Link href="/#contact">Contact</Navbar.Link>
         </Navbar.Collapse>
 
         <div className="flex gap-2 md:order-2">

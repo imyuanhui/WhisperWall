@@ -11,6 +11,7 @@ import CreatePost from "./pages/CreatePost";
 import ViewPost from "./pages/ViewPost";
 import UpdatePost from "./pages/UpdatePost";
 import LandingPage from "./pages/LandingPage";
+import Purchase from "./pages/Purchase";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/explore" element={<Home />} />
         <Route path="/sign-in" element={<Signin />} />
         <Route path="/sign-up" element={<Signup />} />
+        <Route path="/purchase" element={<Purchase />} />
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/create-whisper" element={<CreatePost />} />
