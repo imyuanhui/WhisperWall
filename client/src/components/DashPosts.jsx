@@ -19,6 +19,9 @@ const DashPosts = () => {
   };
 
   useEffect(() => {
+    if (Math.ceil(totalPosts / 12) <= 1) {
+      return;
+    }
     getPosts();
   }, [currentPage, setCurrentPage]);
 
