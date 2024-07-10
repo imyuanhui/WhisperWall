@@ -103,7 +103,12 @@ const Home = () => {
             <HiOutlineRefresh className="w-6 h-6" />
           </Button>
         </Tooltip> */}
-        <Tooltip content="Create a new whisper" style="dark" placement="left">
+        <Tooltip
+          content="Create a new whisper"
+          style="dark"
+          placement="left"
+          className="z-10"
+        >
           <Button
             className="rounded-full w-12 h-12 mt-2"
             gradientMonochrome="pink"

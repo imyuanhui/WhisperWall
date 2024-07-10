@@ -186,7 +186,7 @@ const ViewPost = () => {
   } else {
     return (
       <div>
-        <div className="fixed bottom-10 end-10">
+        <div className="fixed bottom-10 end-10 z-10">
           <Tooltip content="Create a new whisper" style="dark" placement="left">
             <Button
               className="rounded-full w-12 h-12"
