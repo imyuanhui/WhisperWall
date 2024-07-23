@@ -79,7 +79,7 @@ const DashSidebar = () => {
             <Sidebar.Item href="/create-whisper" icon={HiViewGridAdd}>
               Create
             </Sidebar.Item>
-            <Sidebar.Item href="/" icon={HiStatusOnline}>
+            <Sidebar.Item href="/explore" icon={HiStatusOnline}>
               Explore
             </Sidebar.Item>
           </Sidebar.ItemGroup>
