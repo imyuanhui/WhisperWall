@@ -13,6 +13,7 @@ import UpdatePost from "./pages/UpdatePost";
 import LandingPage from "./pages/LandingPage";
 import Purchase from "./pages/Purchase";
 import { io } from "socket.io-client";
+import Chat from "./pages/Chat";
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/create-whisper" element={<CreatePost />} />
           <Route path="/update-whisper/:postId" element={<UpdatePost />} />
+          <Route path="/chat/:channel" element={<Chat />} />
         </Route>
         <Route path="/view-whisper/:postId" element={<ViewPost />} />
       </Routes>

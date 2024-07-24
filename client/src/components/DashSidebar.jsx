@@ -8,6 +8,7 @@ import {
   HiSparkles,
   HiStatusOnline,
   HiUserGroup,
+  HiChat,
 } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -81,6 +82,13 @@ const DashSidebar = () => {
             </Sidebar.Item>
             <Sidebar.Item href="/explore" icon={HiStatusOnline}>
               Explore
+            </Sidebar.Item>
+            <Sidebar.Item
+              href="?tab=channels"
+              active={tab === "channels"}
+              icon={HiChat}
+            >
+              Channels
             </Sidebar.Item>
           </Sidebar.ItemGroup>
           <Sidebar.ItemGroup>

@@ -1,4 +1,4 @@
-import express from "express";
+import express, { text } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoutes from "./routes/User.route.js";
@@ -9,7 +9,6 @@ import commentRoutes from "./routes/comment.route.js";
 import notificationRoutes from "./routes/notification.route.js";
 import path from "path";
 import { Server } from "socket.io";
-import { createServer } from "http";
 
 dotenv.config();
 
@@ -25,11 +24,16 @@ mongoose
 const __dirname = path.resolve();
 
 const app = express();
-const server = new createServer(app);
-const io = new Server(server, {
+
+const expressServer = app.listen(3000, () => {
+  console.log("Server is running on port 3000!!");
+});
+
+const io = new Server(expressServer, {
   cors: {
-    origin: "*",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
@@ -58,20 +62,118 @@ app.use((err, req, res, next) => {
   });
 });
 
-io.on("connection", (socket) => {
-  console.log("a user connected");
+let users = [];
 
-  socket.on("join", (userId) => {
-    socket.join(userId);
+const setUsers = (newUsers) => {
+  users = newUsers;
+};
+
+io.on("connection", (socket) => {
+  console.log(`User ${socket.id} connected, Users: ${users[0]?.id}`);
+
+  socket.on("joinChannel", ({ pseudonym, channel }) => {
+    const prevChannel = getUser(socket.id)?.channel;
+    if (prevChannel) {
+      socket.leave(prevChannel);
+      io.to(prevChannel).emit("message", {
+        author: "Admin",
+        text: `${pseudonym} has left this channel.`,
+        time: new Intl.DateTimeFormat("default", {
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+        }).format(new Date()),
+      });
+    }
+    const user = activateUser(socket.id, pseudonym, channel);
+
+    if (prevChannel) {
+      io.to(prevChannel).emit("channelData", {
+        users: getUsers(prevChannel),
+      });
+    }
+
+    socket.join(user.channel);
+
+    console.log(`User ${socket.id} joined, Users: ${users.length}`);
+
+    socket.emit("message", {
+      author: "Admin",
+      text: `Welcome to ${channel} channel.`,
+    });
+    socket.broadcast.to(user.channel).emit("message", {
+      author: "Admin",
+      text: `${user.pseudonym} has joined this channel.`,
+      time: new Intl.DateTimeFormat("default", {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+      }).format(new Date()),
+    });
+
+    io.to(user.channel).emit("channelData", {
+      users: getUsers(user.channel),
+    });
   });
 
   socket.on("disconnect", () => {
-    console.log("user disconnected");
+    const user = getUser(socket.id);
+    disconnectUser(socket.id);
+
+    if (user) {
+      io.to(user.channel).emit("message", {
+        author: "Admin",
+        text: `${user.pseudonym} has left this channel.`,
+        time: new Intl.DateTimeFormat("default", {
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+        }).format(new Date()),
+      });
+
+      io.to(user.channel).emit("channelData", {
+        users: getUsers(user.channel),
+      });
+    }
+
+    console.log(`User ${socket.id} disconnected.`);
+  });
+
+  socket.on("message", ({ author, text }) => {
+    const channel = getUser(socket.id)?.channel;
+    console.log(
+      `User ${socket.id} send a message: ${author} says ${text} at channel ${channel}`
+    );
+    if (channel) {
+      io.to(channel).emit("message", {
+        author,
+        text,
+        time: new Intl.DateTimeFormat("default", {
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+        }).format(new Date()),
+      });
+    }
   });
 });
 
-app.set("io", io);
+// app.set("io", io);
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000!!");
-});
+const activateUser = (id, pseudonym, channel) => {
+  const user = { id, pseudonym, channel };
+  setUsers([...users.filter((user) => user.id !== id), user]);
+  return user;
+};
+
+const disconnectUser = (id) => {
+  setUsers(users.filter((user) => user.id !== id));
+};
+
+const getUser = (id) => {
+  return users.find((user) => user.id === id);
+};
+
+const getUsers = (channel) => {
+  return users.filter((user) => user.channel === channel);
+};
