@@ -42,7 +42,7 @@ const Chat = () => {
 
   useEffect(() => {
     // socket = io("http://localhost:3000");
-    const newSocket = io("http://localhost:3000");
+    const newSocket = io("https://whisperwall-d2ry.onrender.com");
     setSocket(newSocket);
     setPseudonym("whisper" + Math.floor(Math.random() * 1000 + 1000));
 

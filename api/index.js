@@ -29,13 +29,17 @@ const expressServer = app.listen(3000, () => {
   console.log("Server is running on port 3000!!");
 });
 
-const io = new Server(expressServer, {
-  cors: {
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST"],
-    credentials: true,
-  },
-});
+const io = new Server(
+  expressServer
+  // ,
+  // {
+  //   cors: {
+  //   origin: "http://localhost:5173",
+  //   methods: ["GET", "POST"],
+  //   credentials: true,
+  // },
+  // }
+);
 
 app.use(express.json());
 app.use(cookieParser());
